@@ -1,7 +1,9 @@
 package algorithm.DynamicProgramming.Sherlock_and_Cost;
 
 import java.util.*;
-
+/*
+Sherlock and Cost Solution
+ */
 public class Solution {
     public static void main(String args[]) throws Exception {
         Scanner in = new Scanner(System.in);
