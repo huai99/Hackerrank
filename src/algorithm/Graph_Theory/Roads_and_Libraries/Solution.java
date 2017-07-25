@@ -6,18 +6,12 @@ import java.util.Scanner;
 
 public class Solution {
 
-    /*
-    Refer to this solution and find out my problem
-    https://www.hackerrank.com/rest/contests/master/challenges/torque-and-development/hackers/daniel_kinzler/download_solution
-     */
-
     static class Graph {
         boolean[] visited;
         LinkedList<Integer>[] adj;
         int numberOfNodes;
         int minimumRoadNumber = 0;
         long minCost = 0;
-        int numberOfDisconnectedRoad = 0;
 
         Graph(int n) {
             numberOfNodes = n;
