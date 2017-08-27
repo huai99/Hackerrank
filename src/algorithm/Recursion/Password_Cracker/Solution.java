@@ -1,77 +1,66 @@
 package algorithm.Recursion.Password_Cracker;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class Solution {
-    //List to store the words to print
-    static ArrayList<String> list;
 
-    //Memoization map
-    static HashMap<String, Boolean> memo;
+    static HashMap<String, Boolean> mem;
+    static ArrayList<String> list;
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        int t = in.nextInt();
+        int T = in.nextInt();
+        mem = new HashMap<>();
         list = new ArrayList<>();
-        memo = new HashMap<>();
-        for (int p = 0; p < t; p++) {
+        for (int i = 0; i < T; i++) {
             int n = in.nextInt();
-            String[] A = new String[n];
-            for (int i = 0; i < n; i++) {
-                String s = in.next();
-                A[i] = s;
+            String[] str_array = new String[n];
+            for (int j = 0; j < n; j++) {
+                str_array[j] = in.next();
             }
-            String password = in.next();
-            if (verifyIfPassword(A, password)) {
-                for (String s1 : list) {
-                    System.out.print(s1 + " ");
+            String test = in.next();
+            if (solve(test, str_array)) {
+                for (String word : list) {
+                    System.out.print(word + " ");
                 }
                 System.out.println();
             } else {
                 System.out.println("WRONG PASSWORD");
             }
 
-            //Important! : Clear the memo and list
-            memo.clear();
             list.clear();
+            mem.clear();
         }
     }
 
-    /*
-    This approach is very much like dynamic programming where we test out every possibilities
-    and use memoization to increase the efficiency
-     */
-    public static boolean verifyIfPassword(String[] A, String password) {
-        int i = 0;
-        if (memo.containsKey(password)) {
-            return memo.get(password);
-        }
-        if (password.equals("") || password.equals(" ") || password.length() == 0) {
+    public static boolean solve(String test, String[] str_array) {
+        if (test.equals("") || test.length() == 0) {
             return true;
         }
-        for (int k = 0; k < A.length; k++) {
-            String a = A[k];
-            if (i + a.length() > password.length()) {
+        if (mem.containsKey(test)) {
+            return mem.get(test);
+        }
+        for (String word : str_array) {
+            int length = word.length();
+            if (length > test.length()) {
                 continue;
             }
-            String test = password.substring(i, i + a.length());
+            String sub = test.substring(0, length);
             ArrayList<String> temp = new ArrayList(list);
-            if (test.equals(a)) {
-                list.add(a);
-                int newLength = i + a.length();
-                if (verifyIfPassword(A, password.substring(newLength, password.length()))) {
-                    memo.put(password, true);
+            if (sub.equals(word)) {
+                list.add(word);
+                String next_sub = test.substring(length, test.length());
+                if (solve(next_sub, str_array)) {
+                    mem.put(test, true);
                     return true;
                 } else {
                     list = temp;
-                    continue;
                 }
             }
         }
-        memo.put(password, false);
+        mem.put(test, false);
         return false;
     }
 }
