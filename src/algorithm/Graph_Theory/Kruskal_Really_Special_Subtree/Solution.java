@@ -2,7 +2,6 @@ package algorithm.Graph_Theory.Kruskal_Really_Special_Subtree;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Solution {
@@ -36,6 +35,7 @@ public class Solution {
         void addEdge(Edges edges) {
             edgesList.add(edges);
         }
+
         /*
         Find and union are the function that helps detect cycle in the graph
          */
@@ -74,7 +74,7 @@ public class Solution {
                 subset[i].rank = 0;
             }
             int k = 0;
-            int j=0;
+            int j = 0;
             while (k < numberOfNodes - 1) {
                 Edges next_edge = edgesList.get(j);
                 j++;
